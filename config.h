@@ -14,7 +14,7 @@ static char stty_args[] = "stty raw -echo -iexten echonl";
 /* identification sequence returned in DA and DECID */
 static char vtiden[] = "\033[?6c";
 
-/* Kerning / character bounding-box multipliers */
+/* Kerning / character bounding-box mutlipliers */
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
@@ -23,7 +23,7 @@ static float chscale = 1.0;
  *
  * More advanced example: " `'\"()[]{}"
  */
-static char worddelimiters[] = " ";
+static char worddelimiters[] = " `'\"()[]{}";
 
 /* selection timeouts (in milliseconds) */
 static unsigned int doubleclicktimeout = 300;
@@ -56,60 +56,62 @@ static int bellvolume = 0;
 /* TERM value */
 static char termname[] = "st-256color";
 
-static unsigned int tabspaces = 8;
+static unsigned int tabspaces = 4;
 
+/* background opacity */
+static const int alpha = 0xee;
 
-/* Terminal colors (16 first used in escape sequence) */
+/**
+ * Solarized dark scheme (http://ethanschoonover.com/solarized)
+ * Terminal colors (16 first used in escape sequence)
+ */
 static const char *colorname[] = {
-	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+    /* solarized dark */
+    "#073642",  /*   0: black    */
+    "#dc322f",  /*   1: red      */
+    "#859900",  /*   2: green    */
+    "#b58900",  /*   3: yellow   */
+    "#268bd2",  /*   4: blue     */
+    "#d33682",  /*   5: magenta  */
+    "#2aa198",  /*   6: cyan     */
+    "#eee8d5",  /*   7: white    */
+    "#002b36",  /*   8: brblack  */
+    "#cb4b16",  /*   9: brred    */
+    "#586e75",  /*  10: brgreen  */
+    "#657b83",  /*  11: bryellow */
+    "#839496",  /*  12: brblue   */
+    "#6c71c4",  /*  13: brmagenta*/
+    "#93a1a1",  /*  14: brcyan   */
+    "#fdf6e3",  /*  15: brwhite  */
 
-	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+    [255] = 0,  /* other colors follow */
 
-	[255] = 0,
-
-	/* more colors can be added after 255 to use with DefaultXX */
-	"#cccccc",
+    "#000000",  /* 256: background */
+    "#fbfbfb",  /* 257: foreground */
 };
 
-
-/*
+/**
  * Default colors (colorname index)
  * foreground, background, cursor
  */
-static unsigned int defaultfg = 7;
-static unsigned int defaultbg = 0;
-static unsigned int defaultcs = 256;
+static unsigned int defaultfg = 257;
+static unsigned int defaultbg = 256;
+static unsigned int defaultcs = 14;
 
-/*
+/**
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
  * will reverse too. Another logic would only make the simple feature too
  * complex.
  */
-static unsigned int defaultitalic = 11;
-static unsigned int defaultunderline = 7;
+static unsigned int defaultitalic = 10;
+static unsigned int defaultunderline = 14;
 
 /* Internal mouse shortcuts. */
 /* Beware that overloading Button1 will disable the selection. */
 static Mousekey mshortcuts[] = {
-	/* button               mask            string */
-	{ Button4,              XK_ANY_MOD,     "\031" },
-	{ Button5,              XK_ANY_MOD,     "\005" },
+    /* button               mask            string */
+    { Button4,              XK_ANY_MOD,     "\031" },
+    { Button5,              XK_ANY_MOD,     "\005" },
 };
 
 /* Internal keyboard shortcuts. */
@@ -379,6 +381,6 @@ static Key key[] = {
  * If no match is found, regular selection is used.
  */
 static uint selmasks[] = {
-	[SEL_RECTANGULAR] = Mod1Mask,
+    [SEL_RECTANGULAR] = Mod1Mask,
 };
 
