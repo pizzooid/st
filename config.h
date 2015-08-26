@@ -5,9 +5,9 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Liberation Mono:pixelsize=19:antialias=false:autohint=false";
+static char font[] = "Droid Sans Mono:pixelsize=14:lcdfilter=lcddefault:hintstyle=hintfull:hinting=true:rgba=rgb:antialias=true:autohint=false";;
 static int borderpx = 2;
-static char shell[] = "/bin/sh";
+static char shell[] = "/bin/bash";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw -echo -iexten echonl";
 
