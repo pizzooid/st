@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Liberation Mono:pixelsize=12:antialias=false:autohint=false";
+static char font[] = "Droid Sans Mono:pixelsize=14:lcdfilter=lcddefault:hintstyle=hintfull:hinting=true:rgba=rgb:antialias=true:autohint=false";
 static int borderpx = 2;
 static char shell[] = "/bin/sh";
 static char *utmp = NULL;
@@ -54,7 +54,7 @@ static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 /* TERM value */
-static char termname[] = "st-256color";
+static char termname[] = "st-git-256color";
 
 static unsigned int tabspaces = 8;
 
@@ -62,24 +62,32 @@ static unsigned int tabspaces = 8;
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 	/* 8 normal colors */
-	"black",
-	"red3",
-	"green3",
-	"yellow3",
-	"blue2",
-	"magenta3",
-	"cyan3",
-	"gray90",
+	"#181818", /* color   0 */
+	"#ab4642", /* color   1 */
+	"#a1b56c", /* color   2 */
+	"#f7ca88", /* color   3 */
+	"#7cafc2", /* color   4 */
+	"#ba8baf", /* color   5 */
+	"#86c1b9", /* color   6 */
+	"#d8d8d8", /* color   7 */
 
 	/* 8 bright colors */
-	"gray50",
-	"red",
-	"green",
-	"yellow",
-	"#5c5cff",
-	"magenta",
-	"cyan",
-	"white",
+	"#585858", /* color   8 */
+	"#ab4642", /* color   9 */
+	"#a1b56c", /* color  10 */
+	"#f7ca88", /* color  11 */
+	"#7cafc2", /* color  12 */
+	"#ba8baf", /* color  13 */
+	"#86c1b9", /* color  14 */
+	"#f8f8f8", /* color  15 */
+
+	/* additional colors */
+	"#dc9656", /* color  16 */
+	"#a16946", /* color  17 */
+	"#282828", /* color  18 */
+	"#383838", /* color  19 */
+	"#b8b8b8", /* color  20 */
+	"#e8e8e8", /* color  21 */
 
 	[255] = 0,
 
@@ -94,7 +102,7 @@ static const char *colorname[] = {
  */
 static unsigned int defaultfg = 7;
 static unsigned int defaultbg = 0;
-static unsigned int defaultcs = 256;
+static unsigned int defaultcs = 7;
 
 /*
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
