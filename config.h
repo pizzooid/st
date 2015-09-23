@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char font[] = "Droid Sans Mono:pixelsize=14:lcdfilter=lcddefault:hintstyle=hintfull:hinting=true:rgba=rgb:antialias=true:autohint=false";;
+static char font[] = "Droid Sans Mono:pixelsize=14:lcdfilter=lcddefault:hintstyle=hintfull:hinting=true:rgba=rgb:antialias=true:autohint=false";
 static int borderpx = 2;
 static char shell[] = "/bin/bash";
 static char *utmp = NULL;
@@ -14,7 +14,7 @@ static char stty_args[] = "stty raw -echo -iexten echonl";
 /* identification sequence returned in DA and DECID */
 static char vtiden[] = "\033[?6c";
 
-/* Kerning / character bounding-box mutlipliers */
+/* Kerning / character bounding-box multipliers */
 static float cwscale = 1.0;
 static float chscale = 1.0;
 
@@ -54,57 +54,63 @@ static unsigned int cursorthickness = 2;
 static int bellvolume = 0;
 
 /* TERM value */
-static char termname[] = "st-256color";
+static char termname[] = "st-git-256color";
 
 static unsigned int tabspaces = 4;
 
-/* background opacity */
-static const int alpha = 0xee;
 
-/**
- * Solarized dark scheme (http://ethanschoonover.com/solarized)
- * Terminal colors (16 first used in escape sequence)
- */
+/* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
-    /* solarized dark */
-    "#073642",  /*   0: black    */
-    "#dc322f",  /*   1: red      */
-    "#859900",  /*   2: green    */
-    "#b58900",  /*   3: yellow   */
-    "#268bd2",  /*   4: blue     */
-    "#d33682",  /*   5: magenta  */
-    "#2aa198",  /*   6: cyan     */
-    "#eee8d5",  /*   7: white    */
-    "#002b36",  /*   8: brblack  */
-    "#cb4b16",  /*   9: brred    */
-    "#586e75",  /*  10: brgreen  */
-    "#657b83",  /*  11: bryellow */
-    "#839496",  /*  12: brblue   */
-    "#6c71c4",  /*  13: brmagenta*/
-    "#93a1a1",  /*  14: brcyan   */
-    "#fdf6e3",  /*  15: brwhite  */
+	/* 8 normal colors */
+	"#181818", /* color   0 */
+	"#ab4642", /* color   1 */
+	"#a1b56c", /* color   2 */
+	"#f7ca88", /* color   3 */
+	"#7cafc2", /* color   4 */
+	"#ba8baf", /* color   5 */
+	"#86c1b9", /* color   6 */
+	"#d8d8d8", /* color   7 */
+
+	/* 8 bright colors */
+	"#585858", /* color   8 */
+	"#ab4642", /* color   9 */
+	"#a1b56c", /* color  10 */
+	"#f7ca88", /* color  11 */
+	"#7cafc2", /* color  12 */
+	"#ba8baf", /* color  13 */
+	"#86c1b9", /* color  14 */
+	"#f8f8f8", /* color  15 */
+
+	/* additional colors */
+	"#dc9656", /* color  16 */
+	"#a16946", /* color  17 */
+	"#282828", /* color  18 */
+	"#383838", /* color  19 */
+	"#b8b8b8", /* color  20 */
+	"#e8e8e8", /* color  21 */
 
     [255] = 0,  /* other colors follow */
 
-    "#000000",  /* 256: background */
-    "#fbfbfb",  /* 257: foreground */
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
 };
 
-/**
+
+/*
  * Default colors (colorname index)
  * foreground, background, cursor
  */
-static unsigned int defaultfg = 257;
-static unsigned int defaultbg = 256;
-static unsigned int defaultcs = 14;
+static unsigned int defaultfg = 7;
+static unsigned int defaultbg = 0;
+static unsigned int defaultcs = 7;
 
-/**
+/*
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
  * will reverse too. Another logic would only make the simple feature too
  * complex.
  */
-static unsigned int defaultitalic = 10;
-static unsigned int defaultunderline = 14;
+static unsigned int defaultitalic = 11;
+static unsigned int defaultunderline = 7;
 
 /* Internal mouse shortcuts. */
 /* Beware that overloading Button1 will disable the selection. */
@@ -381,6 +387,6 @@ static Key key[] = {
  * If no match is found, regular selection is used.
  */
 static uint selmasks[] = {
-    [SEL_RECTANGULAR] = Mod1Mask,
+	[SEL_RECTANGULAR] = Mod1Mask,
 };
 
