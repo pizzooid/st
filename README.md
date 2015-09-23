@@ -1,3 +1,11 @@
+st-pizz
+--------------------
+
+Added Droid Sans Font and [base16 colorscheme](https://github.com/d3m1gd/base16-st).
+Added PKGBUILD https://aur4.archlinux.org/packages/st-pizz/
+
+Vim colorscheme can be obtained [here](https://github.com/chriskempson/base16-vim/)
+
 st - simple terminal
 --------------------
 st is a simple terminal emulator for X which sucks less.
