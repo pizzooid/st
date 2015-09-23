@@ -77,7 +77,6 @@ char *argv0;
 #define ATTRCMP(a, b) ((a).mode != (b).mode || (a).fg != (b).fg || (a).bg != (b).bg)
 #define IS_SET(flag) ((term.mode & (flag)) != 0)
 #define TIMEDIFF(t1, t2) ((t1.tv_sec-t2.tv_sec)*1000 + (t1.tv_nsec-t2.tv_nsec)/1E6)
-#define USE_ARGB (alpha != OPAQUE && opt_embed == NULL)
 #define CEIL(x) (((x) != (int) (x)) ? (x) + 1 : (x))
 #define MODBIT(x, set, bit) ((set) ? ((x) |= (bit)) : ((x) &= ~(bit)))
 
@@ -2953,12 +2952,6 @@ xloadcols(void) {
 	}
 
     /* set alpha value of bg color */
-	if (USE_ARGB) {
-		dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE; //0xcccc;
-		dc.col[defaultbg].pixel &= 0x00111111;
-		dc.col[defaultbg].pixel |= alpha << 24; // 0xcc000000;
-	}
-
 	/* load colors [16-255] ; same colors as xterm */
 	for(i = 16, r = 0; r < 6; r++) {
 		for(g = 0; g < 6; g++) {
@@ -3224,39 +3217,7 @@ xinit(void) {
 	if(!(xw.dpy = XOpenDisplay(NULL)))
 		die("Can't open display\n");
 	xw.scr = XDefaultScreen(xw.dpy);
-	xw.depth = (USE_ARGB)? 32: XDefaultDepth(xw.dpy, xw.scr);
-	if (! USE_ARGB)
-		xw.vis = XDefaultVisual(xw.dpy, xw.scr);
-	else {
-		XVisualInfo *vis;
-		XRenderPictFormat *fmt;
-		int nvi;
-		int i;
-
-		XVisualInfo tpl = {
-			.screen = xw.scr,
-			.depth = 32,
-			.class = TrueColor
-		};
-
-		vis = XGetVisualInfo(xw.dpy, VisualScreenMask | VisualDepthMask | VisualClassMask, &tpl, &nvi);
-		xw.vis = NULL;
-		for(i = 0; i < nvi; i ++) {
-			fmt = XRenderFindVisualFormat(xw.dpy, vis[i].visual);
-			if (fmt->type == PictTypeDirect && fmt->direct.alphaMask) {
-				xw.vis = vis[i].visual;
-				break;
-			}
-		}
-
-		XFree(vis);
-
-		if (! xw.vis) {
-			fprintf(stderr, "Couldn't find ARGB visual.\n");
-			exit(1);
-		}
-	}
-
+	xw.vis = XDefaultVisual(xw.dpy, xw.scr);
 	/* font */
 	if(!FcInit())
 		die("Could not init fontconfig.\n");
@@ -3265,10 +3226,7 @@ xinit(void) {
 	xloadfonts(usedfont, 0);
 
 	/* colors */
-	if (! USE_ARGB)
-		xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
-	else
-		xw.cmap = XCreateColormap(xw.dpy, XRootWindow(xw.dpy, xw.scr), xw.vis, None);
+	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
 	xloadcols();
 
 	/* adjust fixed window geometry */
@@ -3299,7 +3257,7 @@ xinit(void) {
 	gcvalues.graphics_exposures = False;
 	xw.buf = XCreatePixmap(xw.dpy, xw.win, xw.w, xw.h, xw.depth);
 	dc.gc = XCreateGC(xw.dpy,
-			(USE_ARGB)? xw.buf: parent,
+			parent,
 			GCGraphicsExposures,
 			&gcvalues);
 	XSetForeground(xw.dpy, dc.gc, dc.col[defaultbg].pixel);
